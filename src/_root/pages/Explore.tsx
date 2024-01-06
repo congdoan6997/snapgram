@@ -33,6 +33,10 @@ const Explore = () => {
 
   const [searchValue, setSearchValue] = useState("");
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
+  // console.log(hasNextPage)
+  // const posts = resultPosts?.pages.flatMap((item) => item?.documents);
+  // const posts = resultPosts?.pages[0]?.documents;
+  // console.log(posts)
   const debounceSearch = useDebounce(searchValue, 500);
   const { data: searchResults, isFetching: isSearchFetching } =
     useSearchPosts(debounceSearch);
@@ -98,7 +102,7 @@ const Explore = () => {
         ) : isShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
         ) : (
-          posts.pages.map((page, index) => (
+          posts?.pages.map((page, index) => (
             <GridPostList posts={page!.documents} key={`page-${index}`} />
           ))
         )}

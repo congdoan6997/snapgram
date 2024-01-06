@@ -280,8 +280,11 @@ export async function searchPosts(query: string) {
   }
 }
 export async function getInfinitePosts({ pageParam }: { pageParam?: number }) {
+  // console.log(pageParam)
   const queries = [Query.orderDesc("$createdAt"), Query.limit(9)];
-  if (pageParam) queries.push(Query.cursorAfter(pageParam.toString()));
+  // if (pageParam) queries.push(Query.cursorAfter(pageParam.toString()));
+  if (pageParam) queries.push(Query.offset(pageParam * 9));
+  console.log(queries);
   try {
     const posts = await databases.listDocuments(
       appwriteConfig.databaseId,
@@ -289,6 +292,8 @@ export async function getInfinitePosts({ pageParam }: { pageParam?: number }) {
       queries,
     );
     if (!posts) throw Error;
+    // if(posts.documents.length === 0) return null
+    // console.log(posts)
     return posts;
   } catch (error) {
     console.error(error);
