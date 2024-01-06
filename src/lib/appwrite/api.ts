@@ -265,7 +265,7 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 export async function searchPosts(query: string) {
-  // console.log(query)
+  // console.log(query)†
   try {
     const posts = await databases.listDocuments(
       appwriteConfig.databaseId,

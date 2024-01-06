@@ -213,14 +213,20 @@ export const useSearchPosts = (query: string) => {
 };
 export const useGetPosts = () => {
   return useInfiniteQuery({
-    queryKey: [QUERY_KEYS.GET_POSTS],
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
     queryFn: getInfinitePosts,
-    getNextPageParam: (lastPage) => {
-      if (lastPage && lastPage.documents.length === 0) {
-        return null;
-      }
-      const lastId = lastPage?.documents[lastPage.documents.length - 1]?.$id;
-      return lastId;
-    },
+    initialPageParam: 0,
+  getNextPageParam: (lastPage, allPages, lastPageParam) => {
+    if (lastPage&& lastPage.total === 0) {
+      return undefined
+    }
+    return lastPageParam + 1
+  },
+  getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+    if (firstPageParam <= 1) {
+      return undefined
+    }
+    return firstPageParam - 1
+  },
   });
 };

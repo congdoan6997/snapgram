@@ -2,7 +2,7 @@ import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
 import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queries";
 import { Models } from "appwrite";
-import React from "react";
+
 
 const Home = () => {
   const {
